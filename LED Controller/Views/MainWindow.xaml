@@ -1,7 +1,7 @@
 <Window x:Class="LED_Controller.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="LED Controller" Height="450" Width="600">
+        Title="LED Controller" Height="600" Width="700">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,10 +23,35 @@
                                 <TextBlock Text="IP:" Width="60"/>
                                 <TextBox Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
                             </StackPanel>
-                            <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                                 <TextBlock Text="Port:" Width="60"/>
                                 <TextBox Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
                             </StackPanel>
+
+                            <TextBlock Text="LED-Strips:" FontWeight="SemiBold" Margin="0,0,0,5"/>
+                            <ItemsControl ItemsSource="{Binding Strips}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                            <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="0,0,5,0"/>
+                                            <TextBox Text="{Binding LedCount, UpdateSourceTrigger=PropertyChanged}" Width="60" Margin="0,0,5,0"/>
+                                            <ComboBox Width="80" SelectedItem="{Binding Type, UpdateSourceTrigger=PropertyChanged}">
+                                                <ComboBoxItem Content="RGB"/>
+                                                <ComboBoxItem Content="RGBW"/>
+                                            </ComboBox>
+                                            <Button Content="✖" Width="30" Margin="5,0,0,0" 
+                                                    Command="{Binding DataContext.RemoveStripCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                                    CommandParameter="{Binding}"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                            <Button Content="Controller löschen" Width="150" Margin="0,5,0,0"
+                                    Command="{Binding DataContext.RemoveControllerCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"/>
+
+                            <Button Content="Strip hinzufügen" Width="150" Margin="0,5,0,0"
+                                    Command="{Binding DataContext.AddStripCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                    CommandParameter="{Binding}"/>
                         </StackPanel>
                     </Border>
                 </DataTemplate>

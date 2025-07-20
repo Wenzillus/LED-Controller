@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -27,7 +28,7 @@ namespace LED_Controller.Models
             set { _port = value; OnPropertyChanged(); }
         }
 
-        public List<LedStrip> Strips { get; set; } = new();
+        public ObservableCollection<LedStrip> Strips { get; set; } = new();
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string? name = null) =>
