@@ -5,5 +5,6 @@
         public string Name { get; set; } = "";
         public int LedCount { get; set; }
         public LedType Type { get; set; }
+        public LedController? Controller { get; set; }
     }
 }

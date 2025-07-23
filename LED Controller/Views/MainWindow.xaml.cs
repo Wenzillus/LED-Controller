@@ -10,5 +10,18 @@ namespace LED_Controller.Views
             InitializeComponent();
             DataContext = new MainViewModel();
         }
+        private void OpenAmbilightWindow_Click(object sender, RoutedEventArgs e)
+        {
+            // Erzeuge das ViewModel
+            var ambilightVm = new LED_Controller.ViewModels.AmbilightViewModel();
+            // Erzeuge das Fenster und setze den DataContext
+            var window = new LED_Controller.Views.AmbilightWindow
+            {
+                DataContext = ambilightVm
+            };
+            window.Show();
+        }
+
     }
+
 }

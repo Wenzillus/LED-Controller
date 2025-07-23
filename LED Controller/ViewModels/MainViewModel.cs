@@ -36,8 +36,8 @@ namespace LED_Controller.ViewModels
         }
 
         // --- Farbwahl für ColorPicker ---
-        private Color _selectedColor = Colors.White;
-        public Color SelectedColor
+        private System.Windows.Media.Color _selectedColor = Colors.White;
+        public System.Windows.Media.Color SelectedColor
         {
             get => _selectedColor;
             set
