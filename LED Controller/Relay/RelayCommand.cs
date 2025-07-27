@@ -3,6 +3,41 @@ using System.Windows.Input;
 
 namespace LED_Controller.Relay
 {
+    public class RelayCommand<T> : ICommand
+    {
+        private readonly Action<T> _execute;
+        private readonly Predicate<T>? _canExecute;
+
+        public RelayCommand(Action<T> execute, Predicate<T>? canExecute = null)
+        {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute;
+        }
+
+        // Schnittstelle exakt matchen:
+        public bool CanExecute(object? parameter)
+        {
+            if (_canExecute is null) return true;
+            if (parameter is T t) return _canExecute(t);
+            return false;
+        }
+
+        public void Execute(object? parameter)
+        {
+            if (parameter is T t)
+                _execute(t);
+            else
+                throw new InvalidOperationException(
+                    $"Expected parameter of type {typeof(T)}, but got {parameter?.GetType()}");
+        }
+
+        public event EventHandler? CanExecuteChanged
+        {
+            add => CommandManager.RequerySuggested += value;
+            remove => CommandManager.RequerySuggested -= value;
+        }
+    }
+
     public class RelayCommand : ICommand
     {
         private readonly Action<object?>? _executeWithParam;

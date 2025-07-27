@@ -5,7 +5,8 @@
     /// </summary>
     public class AmbilightStripConfig
     {
-        public LedStrip Strip { get; set; }
+        public LedStrip Strip { get; set; } = null!;
+
         public AmbilightMapping Mapping { get; set; } = new();
     }
 }

@@ -10,8 +10,22 @@
                   DisplayMemberPath="DeviceName" Width="280"/>
 
         <TextBlock Text="Strip auswählen:" FontWeight="Bold" Margin="0,16,0,4"/>
-        <ComboBox ItemsSource="{Binding Strips}" SelectedItem="{Binding SelectedStrip}" 
-                  DisplayMemberPath="Strip.Name" Width="280"/>
+        <ComboBox
+            ItemsSource="{Binding Strips}"
+            SelectedItem="{Binding SelectedStrip, Mode=TwoWay}"
+            Margin="10"
+            Width="250">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Strip.Name}" FontWeight="Bold"/>
+                        <TextBlock Text=" ("/>
+                        <TextBlock Text="{Binding Strip.LedCount}"/>
+                        <TextBlock Text=" LEDs)"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
 
         <!-- Einstellungen für den Mapping-Modus -->
         <TextBlock Text="Mapping-Modus:" FontWeight="Bold" Margin="0,16,0,4"/>

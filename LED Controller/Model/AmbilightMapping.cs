@@ -1,43 +1,130 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace LED_Controller.Models
 {
     /// <summary>
     /// Mapping und Einstellungen eines Strips für Ambilight.
     /// </summary>
-    public class AmbilightMapping
+    public class AmbilightMapping : INotifyPropertyChanged
     {
-        public AmbilightMode Mode { get; set; } = AmbilightMode.Ring;
+        private AmbilightMode _mode = AmbilightMode.Ring;
+        private int _zoneWidth = 10;
+        private int _zoneHeight = 10;
+        private int _marginPx = 0;
+        private int _startLedIndex = 0;
+        private bool _clockwise = true;
+        private bool _isHorizontal = true;
+        private bool _forward = true;
+
+        public AmbilightMode Mode
+        {
+            get => _mode;
+            set
+            {
+                if (_mode != value)
+                {
+                    _mode = value;
+                    OnPropertyChanged(nameof(Mode));
+                }
+            }
+        }
+
         public List<AmbilightZone> Zones { get; set; } = new();
 
-        /// <summary>
-        /// Für alle Modi: Breite/Höhe der Sampling-Fläche je LED.
-        /// </summary>
-        public int ZoneWidth { get; set; } = 10;
-        public int ZoneHeight { get; set; } = 10;
+        public int ZoneWidth
+        {
+            get => _zoneWidth;
+            set
+            {
+                if (_zoneWidth != value)
+                {
+                    _zoneWidth = value;
+                    OnPropertyChanged(nameof(ZoneWidth));
+                }
+            }
+        }
 
-        /// <summary>
-        /// Abstand vom Rand (für Kreis/Linie).
-        /// </summary>
-        public int MarginPx { get; set; } = 0;
+        public int ZoneHeight
+        {
+            get => _zoneHeight;
+            set
+            {
+                if (_zoneHeight != value)
+                {
+                    _zoneHeight = value;
+                    OnPropertyChanged(nameof(ZoneHeight));
+                }
+            }
+        }
 
-        /// <summary>
-        /// Für Ring/Linie: Start-LED-Nummer (0-basiert), z.B. "Fange mit LED 7 an".
-        /// </summary>
-        public int StartLedIndex { get; set; } = 0;
+        public int MarginPx
+        {
+            get => _marginPx;
+            set
+            {
+                if (_marginPx != value)
+                {
+                    _marginPx = value;
+                    OnPropertyChanged(nameof(MarginPx));
+                }
+            }
+        }
 
-        /// <summary>
-        /// Für Kreis: Richtung (im/gegen Uhrzeigersinn).
-        /// </summary>
-        public bool Clockwise { get; set; } = true;
+        public int StartLedIndex
+        {
+            get => _startLedIndex;
+            set
+            {
+                if (_startLedIndex != value)
+                {
+                    _startLedIndex = value;
+                    OnPropertyChanged(nameof(StartLedIndex));
+                }
+            }
+        }
 
-        /// <summary>
-        /// Für Linie: Horizontal (true) oder Vertikal (false).
-        /// </summary>
-        public bool IsHorizontal { get; set; } = true;
-        /// <summary>
-        /// Für Linie: Richtung (true = L→R oder T→B, false = R→L oder B→T).
-        /// </summary>
-        public bool Forward { get; set; } = true;
+        public bool Clockwise
+        {
+            get => _clockwise;
+            set
+            {
+                if (_clockwise != value)
+                {
+                    _clockwise = value;
+                    OnPropertyChanged(nameof(Clockwise));
+                }
+            }
+        }
+
+        public bool IsHorizontal
+        {
+            get => _isHorizontal;
+            set
+            {
+                if (_isHorizontal != value)
+                {
+                    _isHorizontal = value;
+                    OnPropertyChanged(nameof(IsHorizontal));
+                }
+            }
+        }
+
+        public bool Forward
+        {
+            get => _forward;
+            set
+            {
+                if (_forward != value)
+                {
+                    _forward = value;
+                    OnPropertyChanged(nameof(Forward));
+                }
+            }
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
