@@ -116,6 +116,28 @@ namespace LED_Controller.ViewModels
             StopTestCommand = new RelayCommand(StopTest);
         }
 
+        public AmbilightViewModel(LedStrip strip)
+        : this()  // ruft den Parameterlosen Konstr.
+        {
+            // Nur diesen einen Strip aufnehmen
+            Strips.Clear();
+            Strips.Add(new AmbilightStripConfig
+            {
+                Strip = strip,
+                Mapping = strip.AmbilightMapping
+            });
+
+            // Default-Auswahl setzen
+            if (Screens.Count > 0)
+                SelectedScreen = Screens[0];
+            if (Strips.Count > 0)
+                SelectedStrip = Strips[0];
+
+            // Mapping-Änderungen abonnieren
+            foreach (var cfg in Strips)
+                cfg.Mapping.PropertyChanged += AmbilightMappingChanged;
+        }
+
         // === Methoden ===
 
         private void AmbilightMappingChanged(object? sender, PropertyChangedEventArgs e)

@@ -1,4 +1,8 @@
-﻿using System;
+﻿using LED_Controller.Models;
+using LED_Controller.Relay;
+using LED_Controller.Services;
+using LED_Controller.Views;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -8,9 +12,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
-using LED_Controller.Models;
-using LED_Controller.Services;
-using LED_Controller.Relay;
 
 namespace LED_Controller.ViewModels
 {
@@ -267,6 +268,17 @@ namespace LED_Controller.ViewModels
                         _ambilightTasks.Remove(screenName);
                     }
                 }
+            }
+        }
+
+        public ICommand OpenAmbilightCommand => new RelayCommand<LedStrip>(OpenAmbilight);
+
+        private void OpenAmbilight(LedStrip strip)
+        {
+            if (strip != null)
+            {
+                var ambi = new AmbilightWindow(strip);
+                ambi.Show();
             }
         }
 

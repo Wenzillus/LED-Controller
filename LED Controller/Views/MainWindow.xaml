@@ -47,7 +47,6 @@
                             </StackPanel>
 
                             <!-- Strips (pro Controller) -->
-                            <TextBlock Text="LED-Strips:" FontWeight="SemiBold" Margin="0,12,0,2"/>
                             <ItemsControl ItemsSource="{Binding Strips}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -61,10 +60,19 @@
                                                 <ComboBoxItem Content="RGB"/>
                                                 <ComboBoxItem Content="RGBW"/>
                                             </ComboBox>
-                                            <Button Content="✖" 
-                                                    Command="{Binding DataContext.RemoveStripCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
-                                                    CommandParameter="{Binding}" Width="34" Height="24"
-                                                    ToolTip="Strip löschen" Margin="12,0,0,0"/>
+
+                                            <!-- NEU: Ambilight-Button -->
+                                            <Button Width="28" Height="28" Margin="12,0,0,0"
+                                            ToolTip="Ambilight konfigurieren"
+                                            Command="{Binding DataContext.OpenAmbilightCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                            CommandParameter="{Binding}">
+                                                                    <Image Source="/Images/ambilight_icon.png" Stretch="Uniform"/>
+                                                                </Button>
+
+                                                                <Button Content="✖" 
+                                            Command="{Binding DataContext.RemoveStripCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+                                            CommandParameter="{Binding}" Width="34" Height="24"
+                                            ToolTip="Strip löschen" Margin="12,0,0,0"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LED_Controller.Models;
+using LED_Controller.ViewModels;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,6 +20,16 @@ namespace LED_Controller.Views
             Loaded += AmbilightWindow_Loaded;
             Closing += AmbilightWindow_Closing;
         }
+
+        private readonly LedStrip _strip;
+
+        public AmbilightWindow(LedStrip strip)
+        {
+            InitializeComponent();
+            _strip = strip;
+            DataContext = new AmbilightViewModel(strip);
+        }
+
 
         private void AmbilightWindow_Loaded(object sender, RoutedEventArgs e)
         {
